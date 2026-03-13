@@ -1,0 +1,16 @@
+version: 0.2
+
+phases:
+  pre_build:
+    commands:
+      - echo '=== Build started ==='
+      - echo "Deploying to bucket: $S3_BUCKET_NAME"
+  build:
+    commands:
+      - echo '=== Copying files to S3 ==='
+      - aws s3 sync website/ s3://$S3_BUCKET_NAME --delete
+      - echo '=== Done! Website updated ==='
+
+artifacts:
+  files:
+    - '**/*'
